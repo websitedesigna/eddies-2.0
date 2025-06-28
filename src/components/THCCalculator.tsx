@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Info, Zap, AlertCircle, BookOpen, TrendingUp } from 'lucide-react';
+import { Calculator, Zap, AlertCircle, BookOpen, TrendingUp } from 'lucide-react';
 import type { CalculatorInput, CalculatorResult } from '../types';
 
 const THCCalculator: React.FC = () => {
