@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Info, Zap, AlertCircle } from 'lucide-react';
+import { Calculator, Info, Zap, AlertCircle, BookOpen, TrendingUp } from 'lucide-react';
 import type { CalculatorInput, CalculatorResult } from '../types';
 
 const THCCalculator: React.FC = () => {
@@ -11,6 +11,7 @@ const THCCalculator: React.FC = () => {
   });
 
   const [result, setResult] = useState<CalculatorResult | null>(null);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const calculateTHC = () => {
     // THC calculation formula
@@ -22,19 +23,19 @@ const THCCalculator: React.FC = () => {
 
     if (thcPerServing < 2.5) {
       dosageLevel = 'Micro';
-      recommendation = 'Perfect for beginners or microdosing. Minimal psychoactive effects. 🌱';
+      recommendation = 'Perfect for beginners or microdosing. Minimal psychoactive effects. Great for daily wellness. 🌱';
     } else if (thcPerServing < 5) {
       dosageLevel = 'Low';
-      recommendation = 'Mild effects, good for beginners. Suitable for daily use. 😌';
+      recommendation = 'Mild euphoria and relaxation. Good for beginners and daily use. Functional dosing. 😌';
     } else if (thcPerServing < 10) {
       dosageLevel = 'Medium';
-      recommendation = 'Moderate effects. Good for regular users. 🚀';
+      recommendation = 'Moderate effects with clear euphoria. Good for regular users. Social and creative dosing. 🚀';
     } else if (thcPerServing < 20) {
       dosageLevel = 'High';
-      recommendation = 'Strong effects. For experienced users only. 🌙';
+      recommendation = 'Strong psychoactive effects. For experienced users only. Couch-lock potential. 🌙';
     } else {
       dosageLevel = 'Very High';
-      recommendation = 'Very strong effects. Use with extreme caution. 🌌';
+      recommendation = 'EXTREME effects. Heroic dose territory. Use with extreme caution. Psychedelic-like experiences possible. 🌌';
     }
 
     setResult({
@@ -60,6 +61,13 @@ const THCCalculator: React.FC = () => {
     }
   };
 
+  const presetRecipes = [
+    { name: 'Brownies (16 pieces)', amount: 7, thc: 20, yield: 16 },
+    { name: 'Cookies (24 pieces)', amount: 3.5, thc: 18, yield: 24 },
+    { name: 'Gummies (50 pieces)', amount: 3.5, thc: 25, yield: 50 },
+    { name: 'Butter (1 cup)', amount: 14, thc: 22, yield: 32 }
+  ];
+
   return (
     <section id="calculator" className="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-green-50 relative overflow-hidden">
       {/* Trippy background elements */}
@@ -75,11 +83,38 @@ const THCCalculator: React.FC = () => {
             <span>Precision Dosing Tool by Riley Oliver</span>
           </div>
           <h2 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-            THC Calculator
+            Advanced THC Calculator
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Calculate the exact THC content in your cannabis-infused recipes for safe and consistent dosing.
           </p>
+        </div>
+
+        {/* Quick Presets */}
+        <div className="mb-8 bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
+            <TrendingUp className="h-5 w-5 text-emerald-600" />
+            <span>Quick Recipe Presets</span>
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {presetRecipes.map((preset, index) => (
+              <button
+                key={index}
+                onClick={() => setInput({
+                  ...input,
+                  cannabisAmount: preset.amount,
+                  thcPercentage: preset.thc,
+                  recipeYield: preset.yield
+                })}
+                className="p-3 text-left bg-gradient-to-r from-emerald-50 to-purple-50 hover:from-emerald-100 hover:to-purple-100 rounded-lg border border-emerald-200 hover:border-emerald-300 transition-all duration-200"
+              >
+                <div className="font-medium text-gray-900 text-sm">{preset.name}</div>
+                <div className="text-xs text-gray-600">
+                  {preset.amount}g • {preset.thc}% THC
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -102,6 +137,7 @@ const THCCalculator: React.FC = () => {
                   step="0.1"
                   min="0"
                 />
+                <p className="text-xs text-gray-500 mt-1">Typical range: 3.5g - 28g</p>
               </div>
 
               <div>
@@ -117,6 +153,7 @@ const THCCalculator: React.FC = () => {
                   min="0"
                   max="100"
                 />
+                <p className="text-xs text-gray-500 mt-1">Average flower: 15-25%, Concentrates: 60-90%</p>
               </div>
 
               <div>
@@ -130,6 +167,7 @@ const THCCalculator: React.FC = () => {
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-200 hover:border-green-400"
                   min="1"
                 />
+                <p className="text-xs text-gray-500 mt-1">How many portions will this recipe make?</p>
               </div>
 
               <div>
@@ -145,26 +183,36 @@ const THCCalculator: React.FC = () => {
                   max="100"
                 />
                 <div className="flex justify-between text-sm text-gray-500 mt-1">
-                  <span>70%</span>
+                  <span>70% (Poor)</span>
                   <span className="font-medium bg-gradient-to-r from-emerald-600 to-purple-600 bg-clip-text text-transparent">
                     {input.decarboxylationEfficiency}%
                   </span>
-                  <span>100%</span>
+                  <span>100% (Perfect)</span>
                 </div>
+                <p className="text-xs text-gray-500 mt-1">240°F for 40 minutes = ~90% efficiency</p>
               </div>
-            </div>
 
-            {/* Info box */}
-            <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-lg">
-              <div className="flex items-start space-x-2">
-                <Info className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0 animate-pulse" />
-                <div>
-                  <h4 className="text-sm font-medium text-blue-800 mb-1">Calculation Notes</h4>
-                  <p className="text-sm text-blue-700">
-                    This calculator assumes proper decarboxylation. Results are estimates - actual potency may vary.
-                  </p>
+              {/* Advanced Options Toggle */}
+              <button
+                onClick={() => setShowAdvanced(!showAdvanced)}
+                className="text-sm text-emerald-600 hover:text-emerald-700 font-medium flex items-center space-x-1"
+              >
+                <BookOpen className="h-4 w-4" />
+                <span>{showAdvanced ? 'Hide' : 'Show'} Advanced Tips</span>
+              </button>
+
+              {showAdvanced && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-medium text-blue-800 mb-2">💡 Pro Tips for Accuracy</h4>
+                  <ul className="text-sm text-blue-700 space-y-1">
+                    <li>• Use a lab-tested strain for accurate THC%</li>
+                    <li>• Grind cannabis finely for better extraction</li>
+                    <li>• Monitor decarb temperature with oven thermometer</li>
+                    <li>• Add lecithin to increase bioavailability by 2-3x</li>
+                    <li>• Strain material affects final potency</li>
+                  </ul>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
@@ -206,51 +254,87 @@ const THCCalculator: React.FC = () => {
                   <p className="text-sm text-gray-700">{result.recommendation}</p>
                 </div>
 
-                {/* Safety warning */}
-                <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-lg p-4">
+                {/* Enhanced safety warning */}
+                <div className={`rounded-lg p-4 border-2 ${
+                  result.thcPerServing >= 20 
+                    ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-200' 
+                    : 'bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200'
+                }`}>
                   <div className="flex items-start space-x-2">
-                    <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0 animate-pulse" />
+                    <AlertCircle className={`h-5 w-5 mt-0.5 flex-shrink-0 animate-pulse ${
+                      result.thcPerServing >= 20 ? 'text-red-600' : 'text-amber-600'
+                    }`} />
                     <div>
-                      <h4 className="text-sm font-medium text-amber-800 mb-1">Safety First 🛡️</h4>
-                      <p className="text-sm text-amber-700">
-                        Start with half a serving and wait 2+ hours before consuming more. 
-                        Effects can be delayed and long-lasting.
+                      <h4 className={`text-sm font-medium mb-1 ${
+                        result.thcPerServing >= 20 ? 'text-red-800' : 'text-amber-800'
+                      }`}>
+                        {result.thcPerServing >= 20 ? '🚨 EXTREME DOSE WARNING' : 'Safety First 🛡️'}
+                      </h4>
+                      <p className={`text-sm ${
+                        result.thcPerServing >= 20 ? 'text-red-700' : 'text-amber-700'
+                      }`}>
+                        {result.thcPerServing >= 20 
+                          ? 'This is a HEROIC DOSE that can cause intense psychedelic experiences. Only for extremely experienced users. Start with 1/4 serving maximum!'
+                          : 'Start with half a serving and wait 2+ hours before consuming more. Effects can be delayed and long-lasting.'
+                        }
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Dosage guidelines */}
+                {/* Enhanced dosage guidelines */}
                 <div className="space-y-2">
                   <h4 className="font-medium bg-gradient-to-r from-emerald-600 to-purple-600 bg-clip-text text-transparent">
-                    Dosage Guidelines 📊
+                    Complete Dosage Guide 📊
                   </h4>
                   <div className="text-sm space-y-1">
-                    <div className="flex justify-between hover:bg-green-50 p-1 rounded transition-colors">
-                      <span>Micro (0-2.5mg):</span>
-                      <span className="text-green-600">Minimal effects 🌱</span>
+                    <div className="flex justify-between hover:bg-green-50 p-2 rounded transition-colors">
+                      <span className="font-medium">Micro (0-2.5mg):</span>
+                      <span className="text-green-600">Wellness, focus, minimal high 🌱</span>
                     </div>
-                    <div className="flex justify-between hover:bg-blue-50 p-1 rounded transition-colors">
-                      <span>Low (2.5-5mg):</span>
-                      <span className="text-blue-600">Mild relaxation 😌</span>
+                    <div className="flex justify-between hover:bg-blue-50 p-2 rounded transition-colors">
+                      <span className="font-medium">Low (2.5-5mg):</span>
+                      <span className="text-blue-600">Mild euphoria, relaxation 😌</span>
                     </div>
-                    <div className="flex justify-between hover:bg-yellow-50 p-1 rounded transition-colors">
-                      <span>Medium (5-10mg):</span>
-                      <span className="text-yellow-600">Moderate effects 🚀</span>
+                    <div className="flex justify-between hover:bg-yellow-50 p-2 rounded transition-colors">
+                      <span className="font-medium">Medium (5-10mg):</span>
+                      <span className="text-yellow-600">Clear high, creativity boost 🚀</span>
                     </div>
-                    <div className="flex justify-between hover:bg-orange-50 p-1 rounded transition-colors">
-                      <span>High (10-20mg):</span>
-                      <span className="text-orange-600">Strong effects 🌙</span>
+                    <div className="flex justify-between hover:bg-orange-50 p-2 rounded transition-colors">
+                      <span className="font-medium">High (10-20mg):</span>
+                      <span className="text-orange-600">Strong effects, couch-lock 🌙</span>
                     </div>
-                    <div className="flex justify-between hover:bg-red-50 p-1 rounded transition-colors">
-                      <span>Very High (20mg+):</span>
-                      <span className="text-red-600">Very strong 🌌</span>
+                    <div className="flex justify-between hover:bg-red-50 p-2 rounded transition-colors">
+                      <span className="font-medium">Very High (20mg+):</span>
+                      <span className="text-red-600">Psychedelic territory 🌌</span>
                     </div>
+                  </div>
+                </div>
+
+                {/* Onset time info */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <h4 className="font-medium text-blue-800 mb-1">⏰ Onset Times</h4>
+                  <div className="text-sm text-blue-700 space-y-1">
+                    <div>• Gummies/Hard candies: 15-45 minutes</div>
+                    <div>• Baked goods: 30-90 minutes</div>
+                    <div>• Chocolates: 30-60 minutes</div>
+                    <div>• Beverages: 15-30 minutes</div>
                   </div>
                 </div>
               </div>
             )}
           </div>
+        </div>
+
+        {/* Creator credit */}
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-500 italic">
+            🌿 Advanced calculator crafted by{' '}
+            <span className="bg-gradient-to-r from-emerald-600 to-purple-600 bg-clip-text text-transparent font-semibold">
+              Riley Oliver
+            </span>{' '}
+            for precise cannabis dosing 🌿
+          </p>
         </div>
       </div>
     </section>
