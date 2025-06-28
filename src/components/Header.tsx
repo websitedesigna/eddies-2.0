@@ -14,8 +14,8 @@ const Header: React.FC = () => {
     <header className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b-2 border-gradient-to-r from-purple-400 via-pink-400 to-green-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
+          {/* Logo with Creator Name */}
+          <div className="flex items-center space-x-3">
             <div className="bg-gradient-to-br from-emerald-600 via-purple-600 to-pink-600 p-2 rounded-lg animate-pulse">
               <Leaf className="h-6 w-6 text-white transform rotate-12" />
             </div>
@@ -24,6 +24,15 @@ const Header: React.FC = () => {
                 GreenChef
               </h1>
               <p className="text-xs text-emerald-600 font-medium">Cannabis Culinary Guide</p>
+            </div>
+            <div className="hidden sm:block border-l border-gray-300 pl-3 ml-3">
+              <p className="text-sm text-gray-600">
+                by{' '}
+                <span className="bg-gradient-to-r from-emerald-600 to-purple-600 bg-clip-text text-transparent font-semibold">
+                  Riley Oliver
+                </span>
+              </p>
+              <p className="text-xs text-gray-500">Cannabis Chef & Developer</p>
             </div>
           </div>
 
@@ -58,6 +67,17 @@ const Header: React.FC = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t">
+            {/* Mobile creator credit */}
+            <div className="mb-4 pb-4 border-b border-gray-200">
+              <p className="text-sm text-gray-600 text-center">
+                Created by{' '}
+                <span className="bg-gradient-to-r from-emerald-600 to-purple-600 bg-clip-text text-transparent font-semibold">
+                  Riley Oliver
+                </span>
+              </p>
+              <p className="text-xs text-gray-500 text-center">Cannabis Chef & Developer</p>
+            </div>
+            
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => {
                 const Icon = item.icon;
