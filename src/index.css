@@ -10,7 +10,7 @@
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-20px); }
 }
 
 @keyframes glow {
@@ -18,12 +18,56 @@
   50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.8), 0 0 30px rgba(147, 51, 234, 0.5); }
 }
 
+@keyframes mushroom-sway {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(2deg); }
+  50% { transform: translateY(-15px) rotate(0deg); }
+  75% { transform: translateY(-5px) rotate(-2deg); }
+}
+
+@keyframes psychedelic-pulse {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg);
+    filter: hue-rotate(0deg) saturate(1);
+  }
+  25% { 
+    transform: scale(1.1) rotate(90deg);
+    filter: hue-rotate(90deg) saturate(1.5);
+  }
+  50% { 
+    transform: scale(0.9) rotate(180deg);
+    filter: hue-rotate(180deg) saturate(2);
+  }
+  75% { 
+    transform: scale(1.05) rotate(270deg);
+    filter: hue-rotate(270deg) saturate(1.2);
+  }
+}
+
+@keyframes trippy-wave {
+  0% { transform: translateX(-100%) skewX(0deg); }
+  50% { transform: translateX(0%) skewX(15deg); }
+  100% { transform: translateX(100%) skewX(0deg); }
+}
+
 .animate-rainbow {
   animation: rainbow 3s linear infinite;
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-mushroom-sway {
+  animation: mushroom-sway 8s ease-in-out infinite;
+}
+
+.animate-psychedelic-pulse {
+  animation: psychedelic-pulse 4s ease-in-out infinite;
+}
+
+.animate-trippy-wave {
+  animation: trippy-wave 10s linear infinite;
 }
 
 .animate-glow {
@@ -42,6 +86,18 @@
   transform: scale(1.05) rotate(1deg);
   filter: saturate(1.5) hue-rotate(15deg);
   transition: all 0.3s ease;
+}
+
+/* Enhanced mushroom effects */
+.mushroom-cap {
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), transparent 50%),
+              linear-gradient(45deg, #ef4444, #ec4899, #8b5cf6);
+  animation: psychedelic-pulse 6s ease-in-out infinite;
+}
+
+.mushroom-spots {
+  background: radial-gradient(circle, white 40%, transparent 50%);
+  animation: rainbow 4s linear infinite;
 }
 
 /* Custom scrollbar */
@@ -90,4 +146,34 @@
   cursor: pointer;
   border: none;
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+/* Psychedelic background effects */
+.psychedelic-bg {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 255, 198, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  animation: psychedelic-pulse 8s ease-in-out infinite;
+}
+
+/* Trippy particle effects */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 3s ease-in-out infinite;
+}
+
+.particle:nth-child(odd) {
+  animation-direction: reverse;
+}
+
+.particle:nth-child(3n) {
+  animation-duration: 4s;
+}
+
+.particle:nth-child(4n) {
+  animation-duration: 5s;
 }
